@@ -18,7 +18,7 @@ options = {
   },
   player_o: 2,
   player_x: 1,
-  empty_value: 0
+  empty_value: -1
 };
 options.player = options.player_o;
 
@@ -335,7 +335,8 @@ var processMove = function(bigGrid, smallGrid, player) {
     socket.emit('match:move', {
       main_board: data.mainBoard,
       boards: data.boards,
-      next_move: player == options.player_x ? options.player_y : options.player_x
+      next_move: player == options.player_x ? options.player_y : options.player_x,
+      next_board: nextBoard
     });
   }
   last = player == options.player_o ? options.player_x : options.player_o;
