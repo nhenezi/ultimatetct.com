@@ -330,11 +330,12 @@ var processMove = function(bigGrid, smallGrid, player) {
   } else if (data.mainBoard[smallGrid] == options.empty_value) {
     nextBoard = smallGrid;
   }
+
   if (last === options.player) {
     socket.emit('match:move', {
       main_board: data.mainBoard,
       boards: data.boards,
-      next_moved: player
+      next_move: player == options.player_x ? options.player_y : options.player_x
     });
   }
   last = player == options.player_o ? options.player_x : options.player_o;
