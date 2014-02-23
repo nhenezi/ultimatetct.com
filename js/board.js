@@ -16,8 +16,11 @@ options = {
       stroke: 'black',
     }
   },
-  player: 'o'
+  player_o: 2,
+  player_x: 1,
+  empty_value: 0
 };
+options.player = options.player_o;
 
 var p = {
   size: 600,
@@ -140,7 +143,7 @@ var markSpot = function(top, left) {
  */
 var draw = function(i, j, type, boardMatrix) {
   var center = findCenter(boardMatrix[i][j]);
-  if (type == 'o') {
+  if (type == options.player_o) {
     var radius = 20;
     canvas.add(new fabric.Circle({
       top: center.y - radius,
@@ -167,10 +170,10 @@ var initData = function() {
   mainBoard = [];
   boards = [];
   for (var i = 0; i < 9; i++) {
-    mainBoard.push(null);
+    mainBoard.push(options.empty_value);
     var row = [];
     for (var j = 0; j < 9; j++) {
-      row.push(null);
+      row.push(options.empty_value);
     }
     boards.push(row);
   }
@@ -183,7 +186,7 @@ var initData = function() {
 
 
 var winner = function(board) {
-  if (board[0] != null) {
+  if (board[0] != options.empty_value) {
     if (board[0] === board[1] &&  board[1] === board[2]) {
       return {winner: board[0], c: [0, 1, 2]};
     } else if (board[0] === board[3] && board[3] === board[6]) {
@@ -193,13 +196,13 @@ var winner = function(board) {
     }
   }
 
-  if (board[1] != null) {
+  if (board[1] != options.empty_value) {
     if (board[1] == board[4] && board[4] == board[7]) {
       return {winner: board[1], c: [1, 4, 7] };
     }
   }
 
-  if (board[2] != null) {
+  if (board[2] != options.empty_value) {
     if (board[2] === board[4] && board[4] === board[6]) {
       return {winner: board[2], c: [2, 4, 6]};
     } else if (board[2] === board[5] && board[5] === board[8]) {
@@ -207,13 +210,13 @@ var winner = function(board) {
     }
   }
 
-  if (board[3] != null) {
+  if (board[3] != options.empty_value) {
     if (board[3] === board[4] && board[4] === board[5]) {
       return {winner: board[3], c: [3, 4, 5]};
     }
   }
 
-  if (board[6] != null) {
+  if (board[6] != options.empty_value) {
     if (board[6] === board[7] && board[7] === board[8]) {
       return {winner: board[6], c: [6, 7, 8]};
     }
@@ -317,14 +320,14 @@ var processMove = function(bigGrid, smallGrid, player) {
   var w;
   nextBoard = null;
   // if board is not decided we calculate winner
-  if (data.mainBoard[bigGrid] == null && (w = winner(data.boards[bigGrid]))) {
+  if (data.mainBoard[bigGrid] == options.empty_value && (w = winner(data.boards[bigGrid]))) {
     data.mainBoard[bigGrid] = player;
     drawLine(w.c[0], w.c[2], coords.boards[bigGrid], options.colors.win.stroke);
     console.log(w, 'at', bigGrid);
     if (w = winner(data.mainBoard)) {
       console.log('winner is' + player);
     }
-  } else if (data.mainBoard[smallGrid] == null) {
+  } else if (data.mainBoard[smallGrid] == options.empty_value) {
     nextBoard = smallGrid;
   }
   if (last === options.player) {
@@ -334,7 +337,7 @@ var processMove = function(bigGrid, smallGrid, player) {
       next_moved: player
     });
   }
-  last = player == 'o' ? 'x' : 'o';
+  last = player == options.player_o ? options.player_x : options.player_o;
   if (nextBoard != null) {
     markBoard(smallGrid, coords.mainBoard);
   } else {
@@ -350,7 +353,7 @@ socket.on('nextMove', function (n) {
   processMove(bigGrid, smallGrid, last);
 });
 
-var last = 'o'
+var last = options.player_o
 var data = initData();
 var nextBoard = null;
 //drawLine(0, 4, coords.MainBoard);
@@ -361,7 +364,7 @@ document.getElementById('main').onclick = function(e) {
   var smallGrid = findGrid(pos.x, pos.y, coords.boards[bigGrid], {debug: true});
   console.log(bigGrid, smallGrid);
   // if big and small boards are not populated and move is valid
-  if (data.boards[bigGrid][smallGrid] == null && data.mainBoard[bigGrid] == null
+  if (data.boards[bigGrid][smallGrid] == options.empty_value && data.mainBoard[bigGrid] == options.empty_value
       && (nextBoard == null || nextBoard == bigGrid)) {
     processMove(bigGrid, smallGrid, last);
   }
