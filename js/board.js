@@ -336,7 +336,7 @@ var processMove = function(bigGrid, smallGrid, player) {
       main_board: data.mainBoard,
       boards: data.boards,
       next_move: player == options.player_x ? options.player_y : options.player_x,
-      next_board: nextBoard
+      next_board: nextBoard === null ? false : nextBoard
     });
   }
   last = player == options.player_o ? options.player_x : options.player_o;
