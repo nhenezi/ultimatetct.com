@@ -1,0 +1,13 @@
+{
+  "name": "ultimatetct.com",
+  "version": "0.1.0",
+  "author": "Nikola Henezi <nikola@henezi.com>",
+  "description": "Ultimate Tic-Tac-Toe (ultimatetct.com) website",
+  "private": true,
+  "scripts": {
+    "start": "jade ./jade/ -o ./html/"
+  },
+  "dependencies": {
+    "jade": "~1.1.5"
+  }
+}

@@ -1,0 +1,72 @@
+include includes/head
+header
+  .label-info
+    .container
+      .pull-right
+        img.img-circle(src='http://static.ultimatetct.local/img/intro.png')
+      .row
+        .col-cs-12
+          h1.hidden-xs.hidden-sm Ultimate Tic-Tac-Toe
+          h2.hidden-md.hidden-lg Ultimate Tic-Tac-Toe
+          h2.hidden-xs.hidden-sm When Tic-Tac-Toe just isn't enough...
+          h2.hidden-ms.hidden-lg When Tic-Tac-Toe just isn't enough...
+          p
+            a.btn.btn-primary(href='./play') play now
+            a.btn.btn-success(href='https://github.com/nhenezi/ultimatetct.com') view on Github
+
+section
+  .container.help-block
+     .text-center
+      .row
+        img.col-md-2.img-circle(src='http://static.ultimatetct.local/img/board.png')
+        .col-md-8
+          h2.align-left What is Ultimate Tic-Tac-Toe?
+          p
+            |Ultimate Tic-Tac-Toe is a 2 player board game similar to Tic-Tac-Toe.
+            |You are playing 10 Tic-Tac-Toe game simultaneously on one 9x9 board!
+      .row
+        .col-md-8.col-md-offset-2
+          h2.align-right How do I win?
+          p
+            |In order to win, you have to win three in a row on major board and to do that you have 
+            |to win three in a row on minor board. 
+
+        img.col-md-2(src='http://static.ultimatetct.local/img/win.png')
+      .row
+        img.col-md-2(src='http://static.ultimatetct.local/img/force_move.png')
+        .col-md-8
+          h2.align-left How do I win on minor boards?
+          p
+            | Rules on minor boards are similar to standard Tic-Tac-Toe with one twist:
+            | When you play on a minor board, your opponent is forced to play on that major board.
+            | Take a look at the picture on left, you have placed O in top-right corner.
+            | So your oponnent is forced to play on top-right major board.
+      .row
+        .col-md-8.col-md-offset-2
+          h2.align-right What if I force opponent on already won/tied field?
+          p
+            | Then you oponnent has no restrictions on next move; i.e. he can play anywhere!
+        img.col-md-2(src='http://static.ultimatetct.local/img/no_restrictions.png')
+      .row
+        .col-md-2
+          h1 ?
+        .col-md-8
+          h2.align-left Still confused?
+            p Please 
+              a(href='http://mathwithbaddrawings.com/2013/06/16/ultimate-tic-tac-toe/') read detailed ruleset
+      .row
+        .col-md-8.col-md-offset-2
+          h2.align-right I found a bug!
+          p
+            | Great; please open a 
+            a(href='https://github.com/nhenezi/ultimatetct.com/issues/new') new issue 
+            | or drop me an email at 
+            a(href='mailto:nikola@henezi.com') nikola@henezi.com
+            | .
+        img.col-md-2(src='http://static.ultimatetct.local/img/GitHub-Mark-120px-plus.png')
+
+
+
+              
+        
+include includes/footer

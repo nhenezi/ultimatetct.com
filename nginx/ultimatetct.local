@@ -8,4 +8,24 @@ server {
   location / {
     try_files $uri $uri/ /index.html;
   }
+
+  location /play {
+    try_files /play.html /index.html;
+  }
+
+  location /about {
+    try_files /about.html /index.hml;
+  }
+}
+
+server {
+  listen 80;
+  root /var/www/;
+  server_name static.ultimatetct.local;
+  index index.htmm;
+  charset utf-8;
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
 }
