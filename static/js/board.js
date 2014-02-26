@@ -344,7 +344,7 @@ var processMove = function(bigGrid, smallGrid, player) {
   }
 }
 
-var socket = io.connect('http://ultimatetct.com:7076');
+var socket = io.connect('http://localhost:7076');
 socket.on('nextMove', function (n) {
   bigGrid = Math.floor(n/9);
   smallGrid = n % 9;
