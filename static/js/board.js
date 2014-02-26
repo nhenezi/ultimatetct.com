@@ -229,7 +229,6 @@ var winner = function(board) {
  * Draws a colored line connecting centers of startGrid and endGrid
  */
 var drawLine = function(startGrid, endGrid, coordMatrix, color) {
-  console.log(startGrid, endGrid, coordMatrix);
   var coords = {
     start: findCenter(coordMatrix[startGrid]),
     end: findCenter(coordMatrix[endGrid])
@@ -238,7 +237,6 @@ var drawLine = function(startGrid, endGrid, coordMatrix, color) {
   if (coords.end.x - coords.start.x == 0) {
     // we have to draw horizontal line
     height = coords.end.y - coords.start.y;
-    console.log(height);
     canvas.add(new fabric.Rect({
       top: coords.start.y - 15,
       left: coords.start.x,
@@ -323,9 +321,8 @@ var processMove = function(bigGrid, smallGrid, player) {
   if (data.mainBoard[bigGrid] == options.empty_value && (w = winner(data.boards[bigGrid]))) {
     data.mainBoard[bigGrid] = player;
     drawLine(w.c[0], w.c[2], coords.boards[bigGrid], options.colors.win.stroke);
-    console.log(w, 'at', bigGrid);
+    nextBoard = smallGrid;
     if (w = winner(data.mainBoard)) {
-      console.log('winner is' + player);
     }
   } else if (data.mainBoard[smallGrid] == options.empty_value) {
     nextBoard = smallGrid;
@@ -347,9 +344,8 @@ var processMove = function(bigGrid, smallGrid, player) {
   }
 }
 
-var socket = io.connect('http://localhost:7076');
+var socket = io.connect('http://ultimatetct.com:7076');
 socket.on('nextMove', function (n) {
-  console.log('nextMove', n);
   bigGrid = Math.floor(n/9);
   smallGrid = n % 9;
   processMove(bigGrid, smallGrid, last);
@@ -364,7 +360,6 @@ document.getElementById('main').onclick = function(e) {
   var pos = getMousePos(e);
   var bigGrid = findGrid(pos.x, pos.y,   coords.mainBoard);
   var smallGrid = findGrid(pos.x, pos.y, coords.boards[bigGrid], {debug: true});
-  console.log(bigGrid, smallGrid);
   // if big and small boards are not populated and move is valid
   if (data.boards[bigGrid][smallGrid] == options.empty_value && data.mainBoard[bigGrid] == options.empty_value
       && (nextBoard == null || nextBoard == bigGrid)) {
