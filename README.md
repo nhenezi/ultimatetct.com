@@ -1,5 +1,6 @@
 # ultimatetct.com
-Ultimate Tic-Tac-Toe is a two player board game. Please visit http://www.ultimatetct.com for more information.
+Ultimate Tic-Tac-Toe is a two player board game. Please visit http://www.ultimatetct.com for more information. 
+If you are looking for server/algorithm code, please visit http://github.com/nhenezi/utct-game-server .
 
 ## Setup instructions for nginx
 Copy nginx configuration `sudo cp ./nginx/ultimatetct.example /etc/nginx/sites-available/utlimatetct.local`
