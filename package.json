@@ -5,7 +5,7 @@
   "description": "Ultimate Tic-Tac-Toe (ultimatetct.com) website",
   "private": true,
   "scripts": {
-    "start": "jade ./jade/ -o ./html/"
+    "start": "jade -w ./jade/ -o ./html/"
   },
   "dependencies": {
     "jade": "~1.1.5"
