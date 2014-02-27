@@ -9,7 +9,7 @@ ultimatetct on any other web server, please submit a pull request with example c
 You can find example of nginx configuration in `./nginx` folder.
 Copy nginx configuration `sudo cp ./nginx/ultimatetct.example /etc/nginx/sites-available/utlimatetct.local`
 and symlink it to site-enabled `cd etc/nginx/sites-enabled; ln -s ../sites-available/ultimatetct.local ./`
-This will enable nginx to server ultimatetct.loca, but you still have to configure it.
+This will enable nginx to server ultimatetct.local, but you still have to configure it.
 
 Open `/etc/nginx/sites-available/ultimatetct.local` and adjust configuration to fit your needs. Configuration
 should be straighforward, if you have any problems consult nginx wiki [http://wiki.nginx.org/Main]
