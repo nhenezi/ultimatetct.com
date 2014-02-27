@@ -1,0 +1,107 @@
+include includes/head
+section
+  .container.help-block
+    .row
+      h1 How to make your own Ultimate Tic-Tac-Toe bot.
+      h2 Goal of this guide
+      p
+        | Goal of this guide is to explain how to make your own bot and
+        | integrate it into ultimatetct.com game server.
+      p  
+        |If you are interested in sharing your program with rest of the world
+        | you can make a pull request and we will make your bot playable on
+        a(href='http://ultimatetct.com')  http://ultimatetct.com.
+        |  We use `fork & pull` model. You can read more about pull requests and `fork & pull` model on 
+        a(href='https://help.github.com/articles/using-pull-requests') Github help page.
+      h2 Overview
+      p 
+        | Out bots communicate with game server via 
+        a(href='http://redis.io/') redis 
+        | using 
+        a(href='http://redis.io/topics/pubsub') Pub/Sub pattern
+        | . You subscribe your bot to channel of the same name
+        | (e.g. if your bot name is <code>next_move_magic</code>, you would subscribe your bot
+        | to <code>next_move_magic</code> channel). You return your move to <code>nextMove</code> channel.
+      h2 Calculating next move
+      p 
+        | When solving Ultimate Tic-Tac-Toe you are interested in one problem; finding best possbile move given
+        | current board status. Here is a simple bot written in python. It only subscribes to redis channel and 
+        | always returns the same move. You can use it as a starting point for your bot. You can find it in 
+        a(href='https://github.com/nhenezi/utct-game-server') utct-game-server repository.
+        |  If you are interested in writing a bot in another programming language, please do so. We will
+        | gladly include examples for future enthusiasts.
+      pre
+        code.language-python
+          | #! /usr/bin/python
+          | import json
+          | import redis
+          | 
+          | 
+          | def send_move(main_board_move, boards_move, oldData):
+          |   # converion to specified format
+          |   best_move = 9 * main_board_move + boards_move
+          |   data = {
+          |     'socket_id': oldData['socket_id'],
+          |     'next_move': best_move
+          |   }
+          |   rc.publish('nextMove', json.dumps(data))
+          | 
+          | def calculate_next_move(data):
+          |   #...
+          |   #...
+          |   #...
+          |   #...
+          |   # calculation is done
+          |   next_move_main_board = 5
+          |   next_move_boards = 3
+          |   # send next move
+          |   return {
+          |     'main_board': next_move_main_board,
+          |     'boards': next_move_boards
+          |   }
+          | 
+          | if __name__ == "__main__":
+          |   rc = redis.Redis();
+          |   ps = rc.pubsub()
+          |   ps.subscribe(['next_move_matic']);
+          | 
+          |   for item in ps.listen():
+          |     if item['type'] == 'message' and item['channel'] == 'next_move_magic':
+          |       data = json.loads(item['data'])
+          |       next_move = calculate_next_move(data)
+          |       send_move(next_move['main_board'], next_move['boards'], data)
+       p
+        | You can code your solution inside <code>calculate_next_move</code> function.
+        | The <code>data</code> is dictionary and it contains following information:
+       pre
+         code.language-javascript
+           | {
+           |   'main_board': [Int], // array of 9 integers, representing major board status
+           |   'boards': [[Int]], // array of arrays of 9 integers, representing minor board status
+           |   'on_move': Int, // represents who is next on move
+           |   'next_board' Int // are we restricted to any board
+           |   'socket_id': String, // represents socket id (used by socket.io)
+           | }
+       p One example of such dictionary would be:
+       pre
+         code.language-javascript
+           | {
+           |  "main_board": [ 2,-1,-1,-1,1,-1,-1,-1,-1],
+           |  "boards": [
+           |     [-1,1,-1,2,2,2,-1,-1,-1],
+           |     [-1,-1,-1,-1,-1,-1,2,-1,-1],
+           |     [-1,-1,-1,2,1,1,-1,-1,-1],
+           |     [-1,-1,2,-1,1,-1,-1,-1,-1],
+           |     [1,-1,-1,1,2,-1,1,-1,-1],
+           |     [-1,-1,-1,-1,-1,-1,2,1,-1],
+           |     [1,-1,-1,-1,2,-1,-1,-1,1],
+           |     [-1,-1,-1,-1,2,-1,-1,-1,-1],
+           |     [2,-1,-1,-1,-1,-1,-1,-1,-1]
+           |  ],
+           |  "on_move": 1,
+           |  "next_board": 3,
+           |  "socket_id":"0pMSb0T-8OgrU9O3xy4R"
+           | }
+       p Thats all you need to get started! 
+script(type='text/javascript' src='http://static.ultimatetct.com/js/prism.js')
+include includes/footer
