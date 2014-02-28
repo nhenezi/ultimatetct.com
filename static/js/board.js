@@ -321,10 +321,10 @@ var processMove = function(bigGrid, smallGrid, player) {
   if (data.mainBoard[bigGrid] == options.empty_value && (w = winner(data.boards[bigGrid]))) {
     data.mainBoard[bigGrid] = player;
     drawLine(w.c[0], w.c[2], coords.boards[bigGrid], options.colors.win.stroke);
-    nextBoard = smallGrid;
     if (w = winner(data.mainBoard)) {
     }
-  } else if (data.mainBoard[smallGrid] == options.empty_value) {
+  }
+  if (data.mainBoard[smallGrid] == options.empty_value) {
     nextBoard = smallGrid;
   }
 
