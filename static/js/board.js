@@ -322,7 +322,7 @@ var processMove = function(bigGrid, smallGrid, player) {
     data.mainBoard[bigGrid] = player;
     drawLine(w.c[0], w.c[2], coords.boards[bigGrid], options.colors.win.stroke);
     if (w = winner(data.mainBoard)) {
-      var msg = options.player == last ? 'You win, congratulations!' + 'You lose, try again :(';
+      var msg = options.player == last ? 'You win, congratulations!' : 'You lose, try again :(';
       alert(msg);
     }
   }
